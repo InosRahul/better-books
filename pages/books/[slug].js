@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import {
@@ -11,13 +11,30 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Book } from '../../models';
-import { db } from '../../utils';
+import { db, Store } from '../../utils';
 import { useStyles } from '../../utils';
 import { Layout } from '../../components';
+import axios from 'axios';
 
 export default function Books(props) {
+  const { dispatch } = useContext(Store);
   const classes = useStyles();
   const { book } = props;
+  if (!book) {
+    return <h1>Book not found</h1>;
+  }
+  const addToCart = async () => {
+    const { data } = await axios.get(`/api/books/${book._id}`);
+    if (data.countInStock <= 0) {
+      window.alert('Out of Stock');
+      return;
+    }
+
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: { ...book, quantity: 1 },
+    });
+  };
   return (
     <Layout title={book.name} description={book.description}>
       <div className={classes.section}>
@@ -91,7 +108,12 @@ export default function Books(props) {
                 </Grid>
               </ListItem>
               <ListItem>
-                <Button fullWidth variant="contained" color="primary">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={addToCart}
+                >
                   {' '}
                   Add to cart
                 </Button>

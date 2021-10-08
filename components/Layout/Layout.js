@@ -10,13 +10,14 @@ import {
   createTheme,
   ThemeProvider,
   CssBaseline,
+  Badge,
 } from '@material-ui/core';
 import { Store, useStyles } from '../../utils';
 import Cookies from 'js-cookie';
 export const Layout = ({ title, description, children }) => {
   const classes = useStyles();
   const { state, dispatch } = useContext(Store);
-  const { darkMode } = state;
+  const { cart } = state;
   const theme = createTheme({
     typography: {
       h1: {
@@ -48,7 +49,18 @@ export const Layout = ({ title, description, children }) => {
             <div className={classes.grow}></div>
             <div>
               <NextLink href="/cart" passHref>
-                <Link>Cart</Link>
+                <Link>
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
+                      Cart
+                    </Badge>
+                  ) : (
+                    'Cart'
+                  )}
+                </Link>
               </NextLink>
               <NextLink href="/login" passHref>
                 <Link>Login</Link>
