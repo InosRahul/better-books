@@ -10,22 +10,14 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import { data, useStyles } from '../../utils';
+import { Book } from '../../models';
+import { db } from '../../utils';
+import { useStyles } from '../../utils';
 import { Layout } from '../../components';
 
-export default function Book() {
+export default function Books(props) {
   const classes = useStyles();
-  const router = useRouter();
-  const { slug } = router.query;
-  const book = data.products.find(a => a.slug === slug);
-  if (!book) {
-    return (
-      <>
-        <h1>Book not found</h1>
-      </>
-    );
-  }
+  const { book } = props;
   return (
     <Layout title={book.name} description={book.description}>
       <div className={classes.section}>
@@ -46,14 +38,30 @@ export default function Book() {
         <Grid item md={3} xs={12}>
           <List>
             <ListItem>
-              <Typography component="h1">{book.name} </Typography>
+              <Typography component="h1" variant="h1">
+                {book.name}{' '}
+              </Typography>
             </ListItem>
-            <ListItem>Category: {book.category}</ListItem>
-            <ListItem>Brand: {book.brand}</ListItem>
-            <ListItem>Rating: {book.rating}</ListItem>
             <ListItem>
-              Description:
-              <Typography>{book.description}</Typography>
+              <Typography>Author: {book.author} </Typography>
+            </ListItem>
+            <ListItem>
+              <Typography>
+                Genre:{' '}
+                {book.genre.map(gen => (
+                  <>{gen} </>
+                ))}
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <Typography> Rating: {book.rating}</Typography>
+            </ListItem>
+            <ListItem>
+              <Typography>
+                {' '}
+                Description:
+                {book.description}
+              </Typography>
             </ListItem>
           </List>
         </Grid>
@@ -94,4 +102,17 @@ export default function Book() {
       </Grid>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+  await db.connect();
+  const book = await Book.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      book: db.convertDocToObj(book),
+    },
+  };
 }
