@@ -15,25 +15,30 @@ import { db, Store } from '../../utils';
 import { useStyles } from '../../utils';
 import { Layout } from '../../components';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function Books(props) {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
+  const router = useRouter();
   const classes = useStyles();
   const { book } = props;
   if (!book) {
     return <h1>Book not found</h1>;
   }
   const addToCart = async () => {
+    const existingItem = state.cart.cartItems.find(x => x._id === book._id);
+    const quantity = existingItem ? existingItem + 1 : 1;
     const { data } = await axios.get(`/api/books/${book._id}`);
-    if (data.countInStock <= 0) {
+    if (data.countInStock < quantity) {
       window.alert('Out of Stock');
       return;
     }
 
     dispatch({
       type: 'ADD_TO_CART',
-      payload: { ...book, quantity: 1 },
+      payload: { ...book, quantity },
     });
+    router.push('/cart');
   };
   return (
     <Layout title={book.name} description={book.description}>

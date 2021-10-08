@@ -1,24 +1,40 @@
 import {
-  Button,
+  Grid,
   Card,
   CardActionArea,
-  CardActions,
-  CardContent,
   CardMedia,
-  Grid,
+  CardContent,
   Typography,
+  CardActions,
+  Button,
 } from '@material-ui/core';
 import NextLink from 'next/link';
 import { Layout } from '../components';
+import { db, Store } from '../utils';
 import { Book } from '../models';
-import { db } from '../utils';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
 
 export default function Home(props) {
+  const router = useRouter();
+  const { state, dispatch } = useContext(Store);
   const { books } = props;
+  const addToCartHandler = async books => {
+    const existItem = state.cart.cartItems.find(x => x._id === books._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/books/${books._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    dispatch({ type: 'ADD_TO_CART', payload: { ...books, quantity } });
+    router.push('/cart');
+  };
   return (
     <Layout>
       <div>
-        <h1>Books</h1>
+        <h1>Products</h1>
         <Grid container spacing={3}>
           {books.map(book => (
             <Grid item md={4} key={book.name}>
@@ -31,16 +47,18 @@ export default function Home(props) {
                       title={book.name}
                     ></CardMedia>
                     <CardContent>
-                      <Typography>
-                        {book.name} - {book.author}
-                      </Typography>
+                      <Typography>{book.name}</Typography>
                     </CardContent>
                   </CardActionArea>
                 </NextLink>
                 <CardActions>
-                  <Typography>{book.price}</Typography>
-                  <Button size="small" color="primary">
-                    Add to Cart
+                  <Typography>${book.price}</Typography>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => addToCartHandler(book)}
+                  >
+                    Add to cart
                   </Button>
                 </CardActions>
               </Card>

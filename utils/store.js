@@ -36,6 +36,19 @@ function reducer(state, action) {
         },
       };
     }
+    case 'REMOVE_FROM_CART': {
+      const cartItems = state.cart.cartItems.filter(
+        x => x._id !== action.payload._id,
+      );
+      Cookies.set('cartItems', JSON.stringify(cartItems));
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          cartItems,
+        },
+      };
+    }
     default:
       return state;
   }
