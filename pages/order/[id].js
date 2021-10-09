@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import dynamic from 'next/dynamic';
 import { Layout, CheckoutWizard } from '../../components';
 import NextLink from 'next/link';
@@ -14,16 +14,14 @@ import {
   TableCell,
   Link,
   CircularProgress,
-  Button,
   Card,
   List,
   ListItem,
 } from '@material-ui/core';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 import { getError, useStyles, Store } from '../../utils';
-import Cookies from 'js-cookie';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -82,8 +80,9 @@ function Order({ params }) {
     if (!order._id || (order._id && order._id !== orderId)) {
       fetchOrder();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order]);
-  const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -146,7 +145,6 @@ function Order({ params }) {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {console.log(orderItems)}
                         {orderItems.map(item => (
                           <TableRow key={item._id}>
                             <TableCell>

@@ -31,6 +31,7 @@ export default function Login() {
     if (userInfo) {
       router.push('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const submitHandler = async ({ email, password }) => {
@@ -121,7 +122,7 @@ export default function Login() {
             </Button>
           </ListItem>
           <ListItem>
-            Don't have an account? &nbsp;
+            Don&apos;t have an account? &nbsp;
             <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
               <Link>Register</Link>
             </NextLink>
