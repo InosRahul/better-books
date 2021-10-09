@@ -26,4 +26,11 @@ export const useStyles = makeStyles({
     marginBottom: 10,
     marginTop: 10,
   },
+  navbarButton: {
+    color: '#ffffff',
+    textTransform: 'initial',
+  },
+  error: {
+    color: '#f04040',
+  },
 });

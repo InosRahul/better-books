@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
-import { Layout } from '../components/';
+import { Layout } from '../components';
 import { Store } from '../utils';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import {
   Grid,
   TableContainer,
@@ -24,6 +25,7 @@ import {
 import axios from 'axios';
 
 function CartScreen() {
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
@@ -38,6 +40,9 @@ function CartScreen() {
   };
   const removeItemHandler = item => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: item });
+  };
+  const checkoutHandler = () => {
+    router.push('/shipping');
   };
   return (
     <Layout title="Shopping Cart">
@@ -129,7 +134,12 @@ function CartScreen() {
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  <Button variant="contained" color="primary" fullWidth>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={checkoutHandler}
+                  >
                     Check Out
                   </Button>
                 </ListItem>
