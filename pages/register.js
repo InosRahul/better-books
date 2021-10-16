@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import React, { useContext, useEffect } from 'react';
 import { Layout } from '../components';
-import { Store, useStyles } from '../utils';
+import { Store, useStyles, getError } from '../utils';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
@@ -50,10 +50,7 @@ export default function Register() {
       Cookies.set('userInfo', JSON.stringify(data));
       router.push(redirect || '/');
     } catch (err) {
-      enqueueSnackbar(
-        err.response.data ? err.response.data.message : err.message,
-        { variant: 'error' },
-      );
+      enqueueSnackbar(getError(err), { variant: 'error' });
     }
   };
   return (

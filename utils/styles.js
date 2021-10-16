@@ -33,4 +33,9 @@ export const useStyles = makeStyles({
   error: {
     color: '#f04040',
   },
+  form: {
+    width: '100%',
+    maxWidth: 800,
+    margin: '0 auto',
+  },
 });
