@@ -10,3 +10,5 @@ Stack
 4. Notistack
 
 Live Demo - [Better-Books](https://better-books.vercel.app/)
+
+![project-demo](demo.png)
