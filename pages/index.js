@@ -52,7 +52,7 @@ export default function Home(props) {
                   </CardActionArea>
                 </NextLink>
                 <CardActions>
-                  <Typography>${book.price}</Typography>
+                  <Typography>₹{book.price}</Typography>
                   <Button
                     size="small"
                     color="primary"

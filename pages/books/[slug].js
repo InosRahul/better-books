@@ -52,8 +52,8 @@ export default function Books(props) {
           <Image
             src={book.image}
             alt={book.name}
-            height="640"
-            width="640"
+            height="320"
+            width="320"
             layout="responsive"
           ></Image>
         </Grid>
@@ -96,7 +96,7 @@ export default function Books(props) {
                     <Typography>Price</Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography>{book.price}</Typography>
+                    <Typography>₹{book.price}</Typography>
                   </Grid>
                 </Grid>
               </ListItem>

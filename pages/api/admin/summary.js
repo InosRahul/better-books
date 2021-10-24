@@ -16,7 +16,7 @@ handler.get(async (req, res) => {
     {
       $group: {
         _id: null,
-        sales: { $sum: '$totalPrice' },
+        sales: { $sum: '₹totalPrice' },
       },
     },
   ]);

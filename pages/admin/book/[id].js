@@ -65,8 +65,8 @@ function ProductEdit({ params }) {
           setValue('slug', data.slug);
           setValue('price', data.price);
           setValue('image', data.image);
-          setValue('category', data.category);
-          setValue('brand', data.brand);
+          setValue('genre', data.genre);
+          setValue('author', data.author);
           setValue('countInStock', data.countInStock);
           setValue('description', data.description);
         } catch (err) {
