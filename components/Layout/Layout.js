@@ -103,7 +103,6 @@ export const Layout = ({ title, description, children }) => {
                     open={Boolean(anchorEl)}
                     onClose={loginMenuCloseHandler}
                   >
-                    <MenuItem onClick={loginMenuCloseHandler}>Profile</MenuItem>
                     <MenuItem
                       onClick={e => loginMenuCloseHandler(e, '/profile')}
                     >
