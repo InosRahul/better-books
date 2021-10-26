@@ -32,7 +32,7 @@ export default function Home(props) {
   const [anchorElPrice, setAnchorElPrice] = useState(null);
   const [anchorElAuthor, setAnchorElAuthor] = useState(null);
   const [anchorElGenre, setAnchorElGenre] = useState(null);
-  const [priceRange, setPriceRange] = useState([0, 25]);
+  const [priceRange, setPriceRange] = useState([200, 240]);
   const [authors, setAuthors] = useState([]);
   const [genres, setGenre] = useState([]);
   const addToCartHandler = async books => {
@@ -181,10 +181,10 @@ export default function Home(props) {
                 <Box sx={{ width: 200, marginTop: 25, marginBottom: 10 }}>
                   <Slider
                     getAriaLabel={() => 'Price Range'}
-                    defaultValue={20}
-                    step={5}
-                    min={0}
-                    max={100}
+                    defaultValue={280}
+                    step={40}
+                    min={200}
+                    max={500}
                     valueLabelDisplay="on"
                     value={priceRange}
                     onChange={sortByPriceRange}
