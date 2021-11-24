@@ -52,9 +52,9 @@ export default function Books(props) {
           <Image
             src={book.image}
             alt={book.name}
-            height="320"
-            width="320"
-            layout="responsive"
+            height="500px"
+            width="500px"
+            objectFit="contain"
           ></Image>
         </Grid>
         <Grid item md={3} xs={12}>

@@ -248,7 +248,7 @@ export default function Home(props) {
             </Menu>
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           {sortedBooks.map(book => (
             <Grid item md={4} key={book.name}>
               <Card>
@@ -256,6 +256,9 @@ export default function Home(props) {
                   <CardActionArea>
                     <CardMedia
                       component="img"
+                      height="500px"
+                      width="500px"
+                      style={{ objectFit: 'contain' }}
                       image={book.image}
                       title={book.name}
                     ></CardMedia>

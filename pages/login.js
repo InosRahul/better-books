@@ -30,6 +30,7 @@ export default function Login() {
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
   const [adminCreds, setAdminCreds] = useState(false);
+  const [guestCreds, setGuestCreds] = useState(false);
   useEffect(() => {
     if (userInfo) {
       router.push('/');
@@ -60,6 +61,18 @@ export default function Login() {
     if (event.target.checked) {
       setValue('email', 'admin@example.com', { shouldValidate: true });
       setValue('password', '123456', {
+        shouldValidate: true,
+      });
+    } else {
+      setValue('email', '');
+      setValue('password', '');
+    }
+  };
+  const fillGuestCreds = event => {
+    setGuestCreds(event.target.checked);
+    if (event.target.checked) {
+      setValue('email', 'guestuser@example2.com', { shouldValidate: true });
+      setValue('password', 'guestpass', {
         shouldValidate: true,
       });
     } else {
@@ -140,8 +153,20 @@ export default function Login() {
             </Button>
           </ListItem>
           <ListItem>
-            <Switch checked={adminCreds} onChange={fillAdminCreds}></Switch>
+            <Switch
+              disabled={guestCreds}
+              checked={adminCreds}
+              onChange={fillAdminCreds}
+            ></Switch>
             <p>Use Admin Credentials</p>
+          </ListItem>
+          <ListItem>
+            <Switch
+              disabled={adminCreds}
+              checked={guestCreds}
+              onChange={fillGuestCreds}
+            ></Switch>
+            <p>Use Guest Credentials</p>
           </ListItem>
           <ListItem>
             Don&apos;t have an account? &nbsp;
